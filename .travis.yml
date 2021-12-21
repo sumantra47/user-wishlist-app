@@ -1,0 +1,24 @@
+language: generic
+services:
+  - docker
+# Create the docker image and push it to docker-hub
+after_success:
+  - docker build -t sumantra47/user-wishlist-app .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push sumantra47/user-wishlist-app 
+
+#deploy in AWS 
+deploy:
+    provider : elasticbeanstalk
+    region : ap-south-1
+    app : "user-wishlist-app"
+    env : "Userwishlistapp-env"
+
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+
+    bucket_name: "multi-cont-wishlist-app"
+    bucket_path: "docker"
+
+    on:
+      branch: "master"
