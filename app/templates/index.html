@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User-Wishlist App</title>
+</head>
+<body>
+    <center>
+    <h1>User-Wishlist Application</h1>
+    <b>Create your wishlist record here</b>
+    <form action="/save" method="POST">
+        <label for="username">Username</label>
+        <input name ="username" id="username" type="text" required>
+        <br><br>
+        <label for="place">Favourite Place</label>
+        <input name ="place" id="place" type="text" required>
+        <br><br>
+        <label for="food">Favourite Food</label>
+        <input name ="food" id="food" type="text" required>
+        <br><br>
+        <input type="submit" value="Save">
+    </form>
+    <b>Type in the username and fetch the wishlist</b>
+    <form action="/get" method="POST">
+        <label for="username">Username</label>
+        <input name ="username" id="username" type="text" required>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if user_exists %}
+        <font color="red">User <b>{{username}}</b> already exists 
+            with the wishlist <b>{{place}}</b> and <b>{{food}}</b>
+        </font>
+        <small>{{msg}}</small>
+    {%endif%}
+
+    {% if saved %}
+        <font color="green">Successfully saved User <b>{{username}}</b> 
+            with wishlist <b>{{place}}</b> and <b>{{food}}</b>!!!
+        </font>
+        <small>{{msg}}</small>
+    {%endif%}
+
+    {% if get %}
+        <font color="blue">The wishlist for <b>{{username}}</b> 
+            is <b>{{place}}</b> and <b>{{food}}</b>!!!
+        </font>
+        <small>{{msg}}</small>
+    {%endif%}
+
+    {% if no_record %}
+        <font color="red">{{msg}}
+        </font>
+    {%endif%}
+
+    <a href="/keys">Keys</a>
+    <br><br>
+    {% if keys %}
+        <h3>Keys</h3>
+        <small>(From Database)</small>
+        <ul> 
+            {%for username in usernames %}
+            <li>{{username}}</li>
+            {% endfor %}
+        </ul>
+    {%endif%}
+    </center>
+</body>
+</html>
